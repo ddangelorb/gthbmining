@@ -68,9 +68,8 @@ class Classifier:
 
         X = dataset.drop('PrereleaseClass', axis=1)  # contains all the columns from the dataset, except the "Class" column
         y = dataset['PrereleaseClass']  # contains the values from the "Class" column
-        test_size = 0.3
+        test_size = 0.2
 
         self._classify_by_decisiontree(X, y, test_size)
         self._classify_by_naivebayes(X, y, test_size)
         self._classify_by_knn(X, y, test_size, 3)
-        print("ok")
