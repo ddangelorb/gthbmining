@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore') #ignore warnings to print values properly
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -28,8 +30,13 @@ class Classifier:
         # Predict the response for test dataset
         y_pred = classifier.predict(X_test)
 
-        # Model Accuracy, how often is the classifier correct?
-        print("DecisionTreeClassifier Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("  ***  DecisionTreeClassifier  ***  ")
+        print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("   F1-Score:", metrics.f1_score(y_test, y_pred))
+        print("   Precision:", metrics.precision_score(y_test, y_pred))
+        print("   Recall:", metrics.recall_score(y_test, y_pred))
+        #print("   Confusion Matrix:", metrics.confusion_matrix(y_test, y_pred))
+
 
     def _classify_by_naivebayes(self, X, y, test_size):
         # Split dataset into training set and test set
@@ -44,8 +51,12 @@ class Classifier:
         # Predict the response for test dataset
         y_pred = classifier.predict(X_test)
 
-        # Model Accuracy, how often is the classifier correct?
-        print("NaiveBayesClassifier Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("  ***  NaiveBayesClassifier  ***  ")
+        print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("   F1-Score:", metrics.f1_score(y_test, y_pred))
+        print("   Precision:", metrics.precision_score(y_test, y_pred))
+        print("   Recall:", metrics.recall_score(y_test, y_pred))
+
 
     def _classify_by_knn(self, X, y, test_size, neighbors):
         # Split dataset into training set and test set
@@ -60,7 +71,13 @@ class Classifier:
         # Predict the response for test dataset
         y_pred = classifier.predict(X_test)
 
-        print("KNN3Classifier Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("  ***  KNN3Classifier  ***  ")
+        print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        print("   F1-Score:", metrics.f1_score(y_test, y_pred))
+        print("   Precision:", metrics.precision_score(y_test, y_pred))
+        print("   Recall:", metrics.recall_score(y_test, y_pred))
+        #print("   Confusion Matrix:", metrics.confusion_matrix(y_test, y_pred))
+
 
     def classify(self):
         sql = "SELECT AuthorInfluencer, ClosedIssues, ClosedPullRequests, ClosedIssuesInfluencer, ClosedPullRequestsInfluencer, PrereleaseClass FROM ReleasesData WHERE IdRepository = ?;"
