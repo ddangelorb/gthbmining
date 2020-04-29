@@ -1,15 +1,19 @@
 # gthbmining
 gthbmining stands for "GitHub mining" and is a data mining approuch to discover trends from public GitHub database repositories.
 
+Due to dependences factors, this project is still using Python 2. Future deploys will support Python 3.
+
 Dependencies
 ------------
-* Python
+* Python 2
 * scikit-learn
 * [github3.py](https://github.com/github3py/github3py) by Ian Cordasco
 
 Setting up
 ------------
-Assuming you already have Python installed follow the steps bellow. Otherwise, go to [Python download page](https://www.python.org/downloads/) and install Python.
+Assuming you already have Python 2 installed follow the steps bellow. Otherwise, go to [Python download page](https://www.python.org/downloads/release/python-2716/) and install Python 2.
+
+PS: The Python download link above redirects to Python 2.7.16, which was the last version tested.
 
 	$ python --version
     $ pip install github3.py
