@@ -77,6 +77,11 @@ class Loader:
         cursor_insert.executescript(sql_insert)
         self.conn.commit()
 
+        cursor_insert_rawdata = self.conn.cursor()
+        sql_insert_rawdata = "INSERT INTO ReleasesRawData SELECT * FROM ReleasesData;"
+        cursor_insert_rawdata.executescript(sql_insert_rawdata)
+        self.conn.commit()        
+
         cursor_standardize = self.conn.cursor()
         sql_standardize = standardize_releasesdata_sql.format(self.repository_id, self.repository_id, self.repository_id, self.repository_id, self.repository_id)
         cursor_standardize.executescript(sql_standardize)
@@ -86,29 +91,29 @@ class Loader:
         gh = login(self.github_user, password=self.github_pwd)
         repository = gh.repository(self.repo_user, self.repo_name)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     1) load_repository")
+        print("{} ::     1) load_repository".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         self._load_repository(repository)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     2) load_contributors")
+        print("{} ::     2) load_contributors".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         contributors = repository.contributors()
         self._load_contributors(gh, contributors)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     3) load_issues")
+        print("{} ::     3) load_issues".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         #  issues = repository.issues()
         issues = repository.issues(state='closed', number=3000)
         #  issues = repository.issues(state='closed')
         self._load_issues(issues)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     4) load_pull_requests")
+        print("{} ::     4) load_pull_requests".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         pull_requests = repository.pull_requests(state='closed', number=3000)
         #  pull_requests = repository.pull_requests(state='closed')
         self._load_pull_requests(pull_requests)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     5) load_releases")
+        print("{} ::     5) load_releases".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         releases = repository.releases()
         self._load_releases(releases)
 
-        print(f"{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} ::     6) load_releases_data")
+        print("{} ::     6) load_releases_data".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         self._load_releases_data(insert_releasesdata_sql, standardize_releasesdata_sql)
 
 
