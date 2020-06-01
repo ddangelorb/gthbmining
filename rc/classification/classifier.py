@@ -41,74 +41,18 @@ class Classifier:
         y_pred = classifier.predict(X_test)
 
         print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
-        logging.info("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
+        logging.info("   Accuracy: {}".format(metrics.accuracy_score(y_test, y_pred)))
+
         print("   F1-Score:", metrics.f1_score(y_test, y_pred))
+        logging.info("   F1-Score: {}".format(metrics.f1_score(y_test, y_pred)))
+
         print("   Precision:", metrics.precision_score(y_test, y_pred))
+        logging.info("   Precision: {}".format(metrics.precision_score(y_test, y_pred)))
+
         print("   Recall:", metrics.recall_score(y_test, y_pred))
+        logging.info("   Recall: {}".format(metrics.recall_score(y_test, y_pred)))
+
         #print("   Confusion Matrix:", metrics.confusion_matrix(y_test, y_pred))
-
-
-    # def _classify_by_decisiontree(self, X, y, test_size):
-    #     # Split dataset into training set and test set
-    #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=1)
-
-    #     # Create Decision Tree classifer object
-    #     classifier = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-
-    #     # Train Decision Tree Classifer
-    #     classifier.fit(X_train, y_train)
-
-    #     # Predict the response for test dataset
-    #     y_pred = classifier.predict(X_test)
-
-    #     print("  ***  DecisionTreeClassifier  ***  ")
-    #     print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
-    #     print("   F1-Score:", metrics.f1_score(y_test, y_pred))
-    #     print("   Precision:", metrics.precision_score(y_test, y_pred))
-    #     print("   Recall:", metrics.recall_score(y_test, y_pred))
-    #     #print("   Confusion Matrix:", metrics.confusion_matrix(y_test, y_pred))
-
-
-    # def _classify_by_naivebayes(self, X, y, test_size):
-    #     # Split dataset into training set and test set
-    #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=1)
-
-    #     # Create a Gaussian Classifier
-    #     classifier = GaussianNB()
-
-    #     #Train the model using the training sets
-    #     classifier.fit(X_train, y_train)
-
-    #     # Predict the response for test dataset
-    #     y_pred = classifier.predict(X_test)
-
-    #     print("  ***  NaiveBayesClassifier  ***  ")
-    #     print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
-    #     print("   F1-Score:", metrics.f1_score(y_test, y_pred))
-    #     print("   Precision:", metrics.precision_score(y_test, y_pred))
-    #     print("   Recall:", metrics.recall_score(y_test, y_pred))
-
-
-    # def _classify_by_knn(self, X, y, test_size, neighbors, XRaw, yRaw):
-    #     # Split dataset into training set and test set
-    #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=1)
-
-    #     # Create KNN Classifier
-    #     classifier = KNeighborsClassifier(n_neighbors=neighbors)
-
-    #     #Train the model using the training sets
-    #     classifier.fit(X_train, y_train)
-
-    #     # Predict the response for test dataset
-    #     y_pred = classifier.predict(X_test)
-
-    #     print("  ***  KNN3Classifier  ***  ")
-    #     print("   Accuracy:", metrics.accuracy_score(y_test, y_pred))
-    #     print("   F1-Score:", metrics.f1_score(y_test, y_pred))
-    #     print("   Precision:", metrics.precision_score(y_test, y_pred))
-    #     print("   Recall:", metrics.recall_score(y_test, y_pred))
-    #     #print("   Confusion Matrix:", metrics.confusion_matrix(y_test, y_pred))
-
 
     def classify(self, classifier_key):
         if classifier_key in self.dic_classifier:
@@ -133,4 +77,5 @@ class Classifier:
             plotter.plot(classifier_path_plot_file)
         else:
             print("{} :: classifier_key{} not found. Supported ones are: 'decisiontree', 'naivebayes', 'knn'".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), classifier_key))
+            logging.info("{} :: classifier_key{} not found. Supported ones are: 'decisiontree', 'naivebayes', 'knn'".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), classifier_key))
 
