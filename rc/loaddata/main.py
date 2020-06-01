@@ -1,7 +1,9 @@
+import sys
 import sqlite3
 from datetime import datetime
 from sqlite3 import Error
 from loader import Loader
+from api.githubclient import GitHubClient
 
 db_path = "db/gthbmining.db"
 create_tables_path = "db/create_tables.sql"
@@ -11,6 +13,7 @@ github_user = ""
 github_pwd = ""
 repo_user = ""
 repo_name = ""
+load_type = 0
 
 
 def load_db_from_github(create_tables_sql, insert_releasesdata_sql, standardize_releasesdata_sql):
@@ -27,7 +30,7 @@ def load_db_from_github(create_tables_sql, insert_releasesdata_sql, standardize_
 
         loader = Loader(conn, github_user, github_pwd, repo_user, repo_name)
         print("{} :: Starting Loader.load()...".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
-        loader.load(insert_releasesdata_sql, standardize_releasesdata_sql)
+        loader.load(insert_releasesdata_sql, standardize_releasesdata_sql, load_type)
         print("{} :: Loader.load() finished...".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
     except Error as e:
         print("Error. load_db_from_github: '{}'".format(e))
@@ -40,24 +43,39 @@ def load_db_from_github(create_tables_sql, insert_releasesdata_sql, standardize_
 if __name__ == '__main__':
     try:
         print("{} ** loaddata/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+        if len(sys.argv) == 2 and sys.argv[1] == 'C':
+            print("We are loading a possible cache here ...")
+            #TODO implement the cache!
+            #https://stackoverflow.com/questions/47660938/python-change-global-variable-from-within-another-file
+        
         github_user = raw_input("GitHub user:")
         github_pwd = raw_input("GitHub password: ")
         repo_user = raw_input("Repository user: ")
         repo_name = raw_input("Repository name: ")
+        load_type = int(raw_input("Load type \n(\n1 - All, \n2 - Basic [All except issues and pullrequests], \n3 - Issues only, \n4 - PullRequests only, \n5 - RelasesData only [Classification Entity, after all loads]\n): "))
 
-        f = open(create_tables_path, mode='r')
-        create_tables_sql = f.read()
-        f.close()
+        if 1 <= load_type <= 5:
+            f = open(create_tables_path, mode='r')
+            create_tables_sql = f.read()
+            f.close()
 
-        fi = open(insert_releasesdata_path, mode='r')
-        insert_releasesdata_sql = fi.read()
-        fi.close()
+            fi = open(insert_releasesdata_path, mode='r')
+            insert_releasesdata_sql = fi.read()
+            fi.close()
 
-        fs = open(standardize_releasesdata_path, mode='r')
-        standardize_releasesdata_sql = fs.read()
-        fs.close()
+            fs = open(standardize_releasesdata_path, mode='r')
+            standardize_releasesdata_sql = fs.read()
+            fs.close()
 
-        load_db_from_github(create_tables_sql, insert_releasesdata_sql, standardize_releasesdata_sql)
-        print(" ** loaddata/main.py finished successfully ** ")
+            load_db_from_github(create_tables_sql, insert_releasesdata_sql, standardize_releasesdata_sql)
+            print(" ** loaddata/main.py finished successfully ** ")
+        else:
+            gAPI = GitHubClient("facebook/react-native", "")
+            repo = gAPI.get_repository()
+            print(repo.id)
+            print(repo.node_id)
+            print(repo.url)
+            print(repo.full_name)
+            print(" Error. Wrong Load type informed. It should be between 1 and 4.")
     except Exception as e:
         print("Error. __main__: '{}'".format(e))

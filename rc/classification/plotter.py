@@ -40,7 +40,7 @@ class Plotter:
         self.y = y
         
 
-    def plot(self):
+    def plot(self, path_plot_file):
         figure = plt.figure(figsize=(27, 9))
 
         # preprocess dataset, split into training and test part
@@ -53,12 +53,13 @@ class Plotter:
         xx, yy = np.meshgrid(np.arange(x_min, x_max, self.h),
                             np.arange(y_min, y_max, self.h))
 
-        # just plot the dataset first
+        # set colors for plotting: dots and decision boundaries
         cm = plt.cm.RdBu
         #cm = plt.cm.gray
         cm_bright = ListedColormap(['#FF0000', '#0000FF'])
         #cm_bright = plt.cm.gray
 
+        # just plot the dataset first
         ax = plt.subplot(1, 2, 1)
         ax.set_title("Normalized Input data")
         # Plot the training points
@@ -103,4 +104,5 @@ class Plotter:
         ax.set_title(self.name)
 
         plt.tight_layout()
-        plt.show()
+        #plt.show()
+        plt.savefig(path_plot_file)
