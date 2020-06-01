@@ -1,4 +1,4 @@
-# gthbmining
+# gthbmining.rc
 gthbmining stands for "GitHub mining" and is a data mining approuch to discover trends from public GitHub database repositories.
 
 Due to dependences factors, this project is still using Python 2. Future deploys will support Python 3.
