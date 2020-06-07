@@ -1,10 +1,11 @@
 from github3 import login, authorize
 from datetime import datetime
-
+import logging
 
 class Loader:
     # constructor
     def __init__(self, conn, github_user, github_pwd, repo_user, repo_name):
+        logging.basicConfig(filename="../output/loaddata.log", level=logging.INFO)
         self.conn = conn
         self.github_user = github_user
         self.github_pwd = github_pwd
@@ -107,19 +108,23 @@ class Loader:
         #load_type [All, Basic]
         if (load_type == 1) or (load_type == 2):
             print("{} ::     *) load_repository".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_repository".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             self._load_repository(repository)
 
             print("{} ::     *) load_contributors".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_contributors".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             contributors = repository.contributors()
             self._load_contributors(gh, contributors)
 
             print("{} ::     *) load_releases".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_releases".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             releases = repository.releases()
             self._load_releases(releases)
 
         #load_type [All, Issues only]
         if (load_type == 1) or (load_type == 3):
             print("{} ::     *) load_issues".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_issues".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             #  issues = repository.issues()
             #issues = repository.issues(state='closed', number=6000)
             issues = repository.issues(state='closed')
@@ -128,6 +133,7 @@ class Loader:
         #load_type [All, PullRequests only]
         if (load_type == 1) or (load_type == 4):
             print("{} ::     *) load_pull_requests".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_pull_requests".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             pull_requests = repository.pull_requests(state='closed', number=30000)
             #pull_requests = repository.pull_requests(state='closed')
             self._load_pull_requests(pull_requests)
@@ -135,6 +141,7 @@ class Loader:
         #load_type [All, ReleasesData only]
         if (load_type == 1) or (load_type == 5):
             print("{} ::     *) load_releases_data".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+            logging.info("{} ::     *) load_releases_data".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
             self._load_releases_data(insert_releasesdata_sql, standardize_releasesdata_sql)
 
 

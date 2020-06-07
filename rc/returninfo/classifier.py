@@ -24,7 +24,7 @@ class Classifier:
             'naivebayes': ["../output/nbplot.png", "Naive Bayes", GaussianNB()],
             'knn': ["../output/knnplot.png", "K-Nearest Neighbors (3)", KNeighborsClassifier(n_neighbors=3)]
         }
-        logging.basicConfig(filename="output/classification.log", level=logging.INFO)
+        logging.basicConfig(filename="../output/returninfo.log", level=logging.INFO)
 
     def _get_repository_id(self, repo_user, repo_name):
         #TODO: Implement that!

@@ -11,8 +11,6 @@ repo_name = ""
 def classify_db():
     conn = None
     try:
-        logging.basicConfig(filename="output/returninfo.log", level=logging.INFO)
-
         print("sqlite3.version: {}".format(sqlite3.version))
         logging.info("sqlite3.version: {}".format(sqlite3.version))
 
@@ -50,6 +48,8 @@ def classify_db():
 
 if __name__ == '__main__':
     try:
+        logging.basicConfig(filename="../output/returninfo.log", level=logging.INFO)
+        
         print("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         logging.info("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         repo_user = raw_input("Repository user: ")
