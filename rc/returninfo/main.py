@@ -4,22 +4,22 @@ from sqlite3 import Error
 from classifier import Classifier
 import logging
 
-db_path = "../loaddata/db/gthbmining.db"
+db_path = "../db/rc.db"
 repo_user = ""
 repo_name = ""
 
 def classify_db():
     conn = None
     try:
-        logging.basicConfig(filename="output/classification.log", level=logging.INFO)
+        logging.basicConfig(filename="output/returninfo.log", level=logging.INFO)
 
         print("sqlite3.version: {}".format(sqlite3.version))
         logging.info("sqlite3.version: {}".format(sqlite3.version))
 
         dburi = 'file:{}?mode=rw'.format(db_path)
         conn = sqlite3.connect(dburi)
-        print("Database found and ready to operate")
-        logging.info("Database found and ready to operate")
+        print("Database found and ready to operate at '{}'".format(db_path))
+        logging.info("Database found and ready to operate at '{}'".format(db_path))
 
         classifier = Classifier(conn, repo_user, repo_name)
         print("{} :: Starting Classification and Plotting ('decisiontree')...".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
@@ -50,14 +50,14 @@ def classify_db():
 
 if __name__ == '__main__':
     try:
-        print("{} ** classification/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
-        logging.info("{} ** classification/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+        print("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
+        logging.info("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         repo_user = raw_input("Repository user: ")
         repo_name = raw_input("Repository name: ")
         conn = None
         classify_db()
-        print(" ** classification/main.py finished successfully ** ")
-        logging.info(" ** classification/main.py finished successfully ** ")
+        print(" ** returninfo/main.py finished successfully ** ")
+        logging.info(" ** returninfo/main.py finished successfully ** ")
     except Exception as e:
         print("Error. __main__: '{}'".format(e))
         logging.info("Error. __main__: '{}'".format(e))

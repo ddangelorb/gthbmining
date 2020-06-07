@@ -20,9 +20,9 @@ class Classifier:
         self.conn = conn
         self.repository_id = self._get_repository_id(repo_user, repo_name)
         self.dic_classifier = {
-            'decisiontree': ["output/decisiontree.png", "Decision Tree", DecisionTreeClassifier(criterion="entropy", max_depth=3)],
-            'naivebayes': ["output/naivebayes.png", "Naive Bayes", GaussianNB()],
-            'knn': ["output/knn.png", "K-Nearest Neighbors (3)", KNeighborsClassifier(n_neighbors=3)]
+            'decisiontree': ["../output/decisiontreeplot.png", "Decision Tree", DecisionTreeClassifier(criterion="entropy", max_depth=3)],
+            'naivebayes': ["../output/nbplot.png", "Naive Bayes", GaussianNB()],
+            'knn': ["../output/knnplot.png", "K-Nearest Neighbors (3)", KNeighborsClassifier(n_neighbors=3)]
         }
         logging.basicConfig(filename="output/classification.log", level=logging.INFO)
 
@@ -75,6 +75,8 @@ class Classifier:
             yRaw = dataset['PrereleaseClass']  # contains the values from the "Class" column
             plotter = Plotter(classifier_name, classifier_obj, XRaw, yRaw)
             plotter.plot(classifier_path_plot_file)
+            print("File '{}' plotted from current data and classifier '{}'".format(classifier_path_plot_file, classifier_name))
+            logging.info("File '{}' plotted from current data and classifier '{}'".format(classifier_path_plot_file, classifier_name))
         else:
             print("{} :: classifier_key{} not found. Supported ones are: 'decisiontree', 'naivebayes', 'knn'".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), classifier_key))
             logging.info("{} :: classifier_key{} not found. Supported ones are: 'decisiontree', 'naivebayes', 'knn'".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S'), classifier_key))
