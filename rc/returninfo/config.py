@@ -1,2 +1,2 @@
-repo_user = "TheAlgorithms"
-repo_name = "Java"
+repo_user = ""
+repo_name = ""
