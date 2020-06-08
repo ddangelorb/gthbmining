@@ -68,12 +68,7 @@ class Classifier:
             y = dataset['PrereleaseClass']  # contains the values from the "Class" column
             self._print_scores(classifier_obj, X, y, test_size = 0.2)
 
-            #Get XRaw, yRaw arrays for plotting, raw data
-            sqlRaw = "SELECT AuthorInfluencer, ClosedIssues, ClosedPullRequests, ClosedIssuesInfluencer, ClosedPullRequestsInfluencer, PrereleaseClass FROM ReleasesRawData WHERE IdRepository = ?;"
-            datasetRaw = pd.read_sql_query(sqlRaw, self.conn, params=str(self.repository_id))
-            XRaw = dataset[['ClosedIssuesInfluencer', 'ClosedPullRequestsInfluencer']]
-            yRaw = dataset['PrereleaseClass']  # contains the values from the "Class" column
-            plotter = Plotter(classifier_name, classifier_obj, XRaw, yRaw)
+            plotter = Plotter(classifier_name, classifier_obj, X, y)
             plotter.plot(classifier_path_plot_file)
             print("File '{}' plotted from current data and classifier '{}'".format(classifier_path_plot_file, classifier_name))
             logging.info("File '{}' plotted from current data and classifier '{}'".format(classifier_path_plot_file, classifier_name))
