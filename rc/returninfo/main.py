@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlite3 import Error
 from classifier import Classifier
 import logging
+import config
 
 db_path = "../db/rc.db"
 repo_user = ""
@@ -52,8 +53,11 @@ if __name__ == '__main__':
         
         print("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         logging.info("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
-        repo_user = raw_input("Repository user: ")
-        repo_name = raw_input("Repository name: ")
+
+        #if you want some cache here, fill the file 'config.py' with information you want
+        repo_user = config.repo_user if config.repo_user else raw_input("Repository user: ")
+        repo_name = config.repo_name if config.repo_name else raw_input("Repository name: ")
+
         conn = None
         classify_db()
         print(" ** returninfo/main.py finished successfully ** ")

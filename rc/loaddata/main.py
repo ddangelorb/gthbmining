@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlite3 import Error
 from loader import Loader
 import logging
-from api.githubclient import GitHubClient
+import config
 
 db_path = "../db/rc.db"
 create_tables_path = "sql/create_tables.sql"
@@ -54,16 +54,11 @@ if __name__ == '__main__':
         print("{} ** loaddata/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         logging.info("{} ** loaddata/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
 
-        if len(sys.argv) == 2 and sys.argv[1] == 'C':
-            print("Loading cache data...")
-            logging.info("Loading cache data...")
-            #TODO implement the cache!
-            #https://stackoverflow.com/questions/47660938/python-change-global-variable-from-within-another-file
-        
-        github_user = raw_input("GitHub user:")
-        github_pwd = raw_input("GitHub password: ")
-        repo_user = raw_input("Repository user: ")
-        repo_name = raw_input("Repository name: ")
+        #if you want some cache here, fill the file 'config.py' with information you want
+        github_user = config.github_user if config.github_user else raw_input("GitHub user:")
+        github_pwd = config.github_pwd if config.github_pwd else raw_input("GitHub password: ")
+        repo_user = config.repo_user if config.repo_user else raw_input("Repository user: ")
+        repo_name = config.repo_name if config.repo_name else raw_input("Repository name: ")
         load_type = int(raw_input("Load type \n(\n1 - All, \n2 - Basic [All except issues and pullrequests], \n3 - Issues only, \n4 - PullRequests only, \n5 - RelasesData only [Classification Entity, after all loads]\n): "))
 
         if 1 <= load_type <= 5:
@@ -83,14 +78,8 @@ if __name__ == '__main__':
             print(" ** loaddata/main.py finished successfully ** ")
             logging.info(" ** loaddata/main.py finished successfully ** ")
         else:
-            gAPI = GitHubClient("facebook/react-native", "")
-            repo = gAPI.get_repository()
-            print(repo.id)
-            print(repo.node_id)
-            print(repo.url)
-            print(repo.full_name)
             print(" Error. Wrong Load type informed. It should be between 1 and 4.")
-            logging.info(" Error. Wrong Load type informed. It should be between 1 and 4.")
+            logging.error(" Error. Wrong Load type informed. It should be between 1 and 4.")
     except Exception as e:
         print("Error. __main__: '{}'".format(e))
         logging.error("Error. __main__: '{}'".format(e))

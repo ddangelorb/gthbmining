@@ -6,13 +6,17 @@ class Loader:
     # constructor
     def __init__(self, conn, github_user, github_pwd, repo_user, repo_name):
         logging.basicConfig(filename="../output/loaddata.log", level=logging.INFO)
+        self.repository_id = 0
         self.conn = conn
         self.github_user = github_user
         self.github_pwd = github_pwd
         self.repo_user = repo_user
         self.repo_name = repo_name
-        self.repository_id = 1 #TODO, fix that! Should be dynamic!
+        self.__set_repository_id()
         
+    def __set_repository_id(self):
+        cursor_conn = self.conn.cursor()
+        self.repository_id = 1 #TODO, fix that! Should be dynamic!
 
     def _load_repository(self, repository):
         if repository is not None:
