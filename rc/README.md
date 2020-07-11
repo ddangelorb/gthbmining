@@ -1,7 +1,9 @@
 # gthbmining.rc
-gthbmining stands for "GitHub mining" and is a data mining approuch to discover trends from public GitHub database repositories.
+Predicting DevOps trends from data in public repositories database can be useful and strategical. Getting to know when a software will be available on Production is pertinent in a DevOps cycle, as this information can drive team planning or even a release strategy behind a software-as-a-service (SaaS) product.
 
-Due to dependences factors, this project is still using Python 2. Future deploys will support Python 3.
+One of the stages of development called as Release Candidates corresponds to versions that have already had all changes (bugs and enhancements) specified, developed and tested, therefore, unless a critical bug appears, this version is probably going to Production very soon. 
+
+The main contribution here is predicting Release Candidates. This module contains a load component responsible for collecting data from a public repository, and a classification component that uses data loaded and applies three data mining supervised techniques (Naïve Bayes, Decision Tree and K-Nearest Neighbors) in order to classify Release Candidates or not.
 
 Dependencies
 ------------
