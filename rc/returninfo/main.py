@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlite3 import Error
 from classifier import Classifier
 import logging
-import config
+from six.moves.configparser import ConfigParser
 
 db_path = "../db/rc.db"
 repo_user = ""
@@ -54,9 +54,11 @@ if __name__ == '__main__':
         print("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
         logging.info("{} ** returninfo/main.py **".format(datetime.today().strftime('%Y-%m-%d-%H:%M:%S')))
 
-        #if you want some cache here, fill the file 'config.py' with information you want
-        repo_user = config.repo_user if config.repo_user else raw_input("Repository user: ")
-        repo_name = config.repo_name if config.repo_name else raw_input("Repository name: ")
+        #if you want some cache here, fill the file 'config.ini' with information you want
+        config = ConfigParser()
+        config.read('config.ini')
+        repo_user = config.get("GitHubRepository", "user") if config.get("GitHubRepository", "user") else raw_input("GitHub Repository user: ")
+        repo_name = config.get("GitHubRepository", "projectname") if config.get("GitHubRepository", "projectname") else raw_input("GitHub Repository project name: ")
 
         conn = None
         classify_db()

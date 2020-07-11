@@ -27,8 +27,14 @@ class Classifier:
         logging.basicConfig(filename="../output/returninfo.log", level=logging.INFO)
 
     def _get_repository_id(self, repo_user, repo_name):
-        #TODO: Implement that!
-        return 1
+        cursor_conn = self.conn.cursor()
+        sql = "SELECT Id FROM Repositories WHERE Name = ?"
+        cursor_conn.execute(sql, ["{}/{}".format(repo_user, repo_name)])
+        id = 0
+        cursor_fetch = cursor_conn.fetchone()
+        if cursor_fetch:
+            id = cursor_fetch[0]
+        return id
 
     def _print_scores(self, classifier, X, y, test_size):
         # Split dataset into training set and test set
@@ -61,6 +67,7 @@ class Classifier:
             classifier_name = dic_item[1]
             classifier_obj = dic_item[2]
 
+            print("repository_id = '{}'".format(self.repository_id))
             #Get X, y arrays for classification, normalized data
             sql = "SELECT AuthorInfluencer, ClosedIssues, ClosedPullRequests, ClosedIssuesInfluencer, ClosedPullRequestsInfluencer, PrereleaseClass FROM ReleasesData WHERE IdRepository = ?;"
             dataset = pd.read_sql_query(sql, self.conn, params=str(self.repository_id))
