@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS RepositoriesContributors (
  IdContributor integer NOT NULL,
  Contributions integer NOT NULL,
  Active integer NOT NULL,
- FOREIGN KEY (IdRepository) REFERENCES Repositories (Id),
- FOREIGN KEY (IdContributor) REFERENCES Contributors (Id)
+ FOREIGN KEY (IdRepository) REFERENCES Repositories (Id) ON DELETE CASCADE,
+ FOREIGN KEY (IdContributor) REFERENCES Contributors (Id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Issues (
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Issues (
  Description text NOT NULL,
  DtOpened text NOT NULL,
  DtClosed text NULL,
- FOREIGN KEY (IdRepository) REFERENCES Repositories (Id)
+ FOREIGN KEY (IdRepository) REFERENCES Repositories (Id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS PullRequests (
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS PullRequests (
  DtOpened text NOT NULL,
  State text NOT NULL,
  DtClosed text NULL,
- FOREIGN KEY (IdRepository) REFERENCES Repositories (Id),
- FOREIGN KEY (IdContributor) REFERENCES Contributors (Id)
+ FOREIGN KEY (IdRepository) REFERENCES Repositories (Id) ON DELETE CASCADE,
+ FOREIGN KEY (IdContributor) REFERENCES Contributors (Id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Releases (
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS Releases (
  Tag text NOT NULL,
  TargetCommitish text NOT NULL,
  Prerelease integer NOT NULL,
- FOREIGN KEY (IdRepository) REFERENCES Repositories (Id)
+ FOREIGN KEY (IdRepository) REFERENCES Repositories (Id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ReleasesRawData (
