@@ -17,7 +17,7 @@ Due to dependences factors, this set of tools is still using Python 2. Future de
 
 Modules
 ------------
-* [gthbmining.rc] (https://github.com/ddangelorb/gthbmining/tree/master/rc/) : The main contribution here is predicting Release Candidates, a pertinent information in a DevOps cycle.
+* [gthbmining.rc](https://github.com/ddangelorb/gthbmining/tree/master/rc/) : The main contribution here is predicting Release Candidates, a pertinent information in a DevOps cycle.
 
 
 License
