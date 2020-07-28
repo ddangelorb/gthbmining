@@ -24,7 +24,7 @@ PS: The Python download link above redirects to Python 2.7.16, which was the las
 
 Running
 ------------
-Before you run: After the project local cloning, bare in mind that you should at least provide your GitHub user Token in config.ini file (step two bellow).
+Before you run: After the project local cloning, bare in mind that you should at least provide your GitHub user Token in config.ini file (step two below).
 
 	$ git clone https://github.com/ddangelorb/gthbmining.git
 	$ vi gthbmining/rc/loaddata/config.ini
