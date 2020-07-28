@@ -24,8 +24,16 @@ PS: The Python download link above redirects to Python 2.7.16, which was the las
 
 Running
 ------------
-	$ python loaddata/main.py
-    $ python returninfo/main.py
+Before you run: After the project local cloning, bare in mind that you should at least provide your GitHub user Token in config.ini file (step two bellow).
+
+	$ git clone https://github.com/ddangelorb/gthbmining.git
+	$ vi gthbmining/rc/loaddata/config.ini
+	$ cd gthbmining/rc
+	$ cd loaddata
+	$ python main.py
+    $ cd ..
+    $ cd returninfo
+    $ python main.py
 
 Please note: There is a [GitHub API Rate limiting](https://developer.github.com/v3/#rate-limiting). Therefore, we strongly recommend partial loads, specially if the repository to be analysed has a big history and data.
 
