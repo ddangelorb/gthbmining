@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
     name='gthbmining',         # How you named your package folder (MyLib)
     packages=['gthbmining'],   # Chose the same as "name"
-    version='1.0',      # Start with a small number and increase it with every change you make
+    version='1.1',      # Start with a small number and increase it with every change you make
     # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     license='MIT',
     # Give a short description about your library
