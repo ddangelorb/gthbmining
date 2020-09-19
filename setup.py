@@ -1,7 +1,11 @@
-from distutils.core import setup
-setup(
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
     name='gthbmining',         # How you named your package folder (MyLib)
-    packages=['gthbmining'],   # Chose the same as "name"
+    packages=['rc'],   # Chose the same as "name"
     version='1.1',      # Start with a small number and increase it with every change you make
     # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     license='MIT',
@@ -12,7 +16,7 @@ setup(
     # Provide either the link to your github or to your website
     url='https://github.com/ddangelorb/gthbmining',
     # I explain this later on
-    download_url='https://github.com/ddangelorb/gthbmining/archive/V_1.tar.gz',
+    download_url='https://github.com/ddangelorb/gthbmining/archive/v_1.1.tar.gz',
     # Keywords that define your package best
     keywords=['GitHub Mining Tool', 'Data Mining',
               'Release Candidate', 'DevOps'],
@@ -36,5 +40,5 @@ setup(
         #'Programming Language :: Python :: 3.4',
         #'Programming Language :: Python :: 3.5',
         #'Programming Language :: Python :: 3.6',
-    ],
+    ]
 )
