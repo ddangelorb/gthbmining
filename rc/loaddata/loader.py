@@ -92,8 +92,8 @@ class Loader:
         for release in releases:
             pre_release = 1 if str(release.prerelease) == "True" else 0
             sql = "INSERT INTO Releases(IdRepository, Author, DtOpened, Code, Description, DtPublished, Tag, TargetCommitish, Prerelease) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-            args = (self.repository_id, str(release.author), release.created_at, str(release.id), str(
-                release.name), release.published_at, str(release.tag_name), str(release.target_commitish), pre_release)
+            args = (self.repository_id, unicode(release.author), release.created_at, unicode(release.id), unicode(
+                release.name), release.published_at, unicode(release.tag_name), unicode(release.target_commitish), pre_release)
             cursor_conn.execute(sql, args)
             self.conn.commit()
 
