@@ -64,6 +64,9 @@ def get_info_scorer():
         x_pos = np.arange(len(datalabels))
         mi = mutual_info_classif(X, y, discrete_features=True)
 
+        for feature in zip(datalabels, mi):
+            print(feature)
+
         fig, ax = plt.subplots(figsize=(16, 8))
         bars = ax.bar(x_pos, mi, color='grey')
         ax.set_ylabel('Mutual Information Score')
