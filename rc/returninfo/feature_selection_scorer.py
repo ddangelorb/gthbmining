@@ -18,6 +18,27 @@ repo_user = ""
 repo_name = ""
 
 
+def autolabel(rects, ax, xpos='center'):
+    """
+    Attach a text label above each bar in *rects*, displaying its height.
+
+    *xpos* indicates which side to place the text w.r.t. the center of
+    the bar. It can be one of the following {'center', 'right', 'left'}.
+    """
+
+    ha = {'center': 'center', 'right': 'left', 'left': 'right'}
+    offset = {'center': 0, 'right': 1, 'left': -1}
+
+    for rect in rects:
+        print("{0:.0f}%".format(rect.get_height()*100))
+        height = rect.get_height()
+        ax.annotate('{}'.format("{0:.0f}%".format(height*100)),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(offset[xpos]*3, 3),  # use 3 points offset
+                    textcoords="offset points",  # in both directions
+                    ha=ha[xpos], va='bottom')
+
+
 def get_info_scorer():
     conn = None
     try:
@@ -42,6 +63,7 @@ def get_info_scorer():
 
         count_datalabels = len(datalabels)
         mi = mutual_info_classif(X, y, discrete_features=True)
+        MI_score = mi
         mi /= np.max(mi)
 
         for i in range(count_datalabels):
@@ -51,6 +73,34 @@ def get_info_scorer():
             plt.ylabel("PrereleaseClass")
             plt.title("Mutual Information={:.2f}".format(mi[i]), fontsize=20)
             plt.savefig("{}_{}.png".format(path_plot_file, datalabels[i]))
+
+        # T2
+        for feature in zip(datalabels, MI_score):
+            print(feature)
+
+        # Create a bar chart for visualizing the mutual information scores
+        x_pos = np.arange(len(datalabels))
+
+        plt.figure(figsize=(16, 8))
+        plt.bar(x_pos, MI_score, color='tomato', width=0.4)
+        plt.xticks(x_pos, datalabels)
+        plt.ylabel('Mutual Information Score')
+        plt.xlabel("ReleasesData fields")
+        plt.title('Release candidates based on ReleasesData fields')
+        plt.savefig("{}.png".format(path_plot_file))
+        # plt.show()
+
+        #plt.figure(figsize=(20, 12))
+        fig, ax = plt.subplots(figsize=(16, 8))
+        bars = ax.bar(x_pos, MI_score, color='grey')
+        ax.set_ylabel('Mutual Information Score')
+        ax.set_title('Release candidates based on ReleasesData fields')
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(datalabels)
+        ax.legend()
+        autolabel(bars, ax, "left")
+        fig.tight_layout()
+        plt.savefig("{}_2.png".format(path_plot_file))
 
     except Error as e:
         print("Error. classify_db: '{}'".format(e))
