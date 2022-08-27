@@ -1,0 +1,9 @@
+INSERT INTO SDPClassifications (Name, Description) VALUES ("High Performers", "High Performers have the 'Deployment frequency' on Demand (multiple deploys per day), 'Lead time for changes' less than one hour.");
+INSERT INTO SDPClassifications (Name, Description) VALUES ("Medium Performers", "Medium Performers have the 'Deployment frequency' between once per week and once per month, 'Lead time for changes' between one week and one month.");
+INSERT INTO SDPClassifications (Name, Description) VALUES ("Low Performers", "Low Performers have the 'Deployment frequency' between once per week and once per month, 'Lead time for changes' between one week and one month.");
+
+INSERT INTO ClassificationMetrics (Name, Description, GettingMethod) VALUES ("Lead Time", "Lead Time is the time it takes to go from code committed to code successfully running in production", "Getting the average time as follows: i) For each Pull request get the latest Commit; ii) Associate the Commit to the closest Release considering Commit date against the Release date.");
+INSERT INTO ClassificationMetrics (Name, Description, GettingMethod) VALUES ("Deployment frequency", "Deployment frequency", "Getting the average time considering all the Releases date until the milestone set.");
+INSERT INTO ClassificationMetrics (Name, Description, GettingMethod) VALUES ("CI usage", "Continuous Integration usage", "Verify though text mining if there is a CI tool available until the milestone set.");
+INSERT INTO ClassificationMetrics (Name, Description, GettingMethod) VALUES ("CD usage", "Continuous Deployment usage", "Verify though text mining if there is a CD tool available until the milestone set.");
+INSERT INTO ClassificationMetrics (Name, Description, GettingMethod) VALUES ("Commits", "Count of Pull request Commits", "Getting the Count of Pull request Commits for the milestone set.");

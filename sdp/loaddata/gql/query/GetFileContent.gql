@@ -1,0 +1,34 @@
+query GetFileContent($owner: String!, $name: String!, $expression: String!, $qualifiedName: String!, $path: String!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+        content: object(expression: $expression) {
+            ... on Blob {
+                text
+            }
+        }
+        info: ref(qualifiedName: $qualifiedName) {
+            target {
+                ... on Commit {
+                    history(first: 100, after: $cursor, path: $path) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        totalCount
+                        nodes {
+                            author {
+                                user {
+                                    login
+                                }
+                                email
+                            }
+                            message
+                            pushedDate
+                            committedDate
+                            authoredDate
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

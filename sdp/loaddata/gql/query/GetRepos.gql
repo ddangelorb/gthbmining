@@ -1,0 +1,29 @@
+query GetRepos($queryParam: String!, $cursor: String) {
+    search(type: REPOSITORY, query: $queryParam, first: 100, after: $cursor) {
+        repositoryCount
+        repos: pageInfo {
+            hasNextPage,
+            endCursor
+        }
+        edges {
+            repo: node {
+                ... on Repository {
+                    allReleases: releases {
+                        totalCount
+                    }
+                    mergedPullRequests: pullRequests(states: MERGED) {
+                        totalCount
+                    }
+                    id
+                    name
+                    owner {
+                        login
+                    }
+                    url
+                    stargazerCount
+                    forkCount
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,170 @@
+https://docs.github.com/en/graphql/overview/explorer
+https://jsonformatter.curiousconcept.com
+
+query GetRepos($queryParam: String!, $cursor: String) {
+    search(type: REPOSITORY, query: $queryParam, first: 100, after: $cursor) {
+        repositoryCount
+        repos: pageInfo {
+            hasNextPage,
+            endCursor
+        }
+        edges {
+            repo: node {
+                ... on Repository {
+                    allReleases: releases {
+                        totalCount
+                    }
+                    mergedPullRequests: pullRequests(states: MERGED) {
+                        totalCount
+                    }
+                    id
+                    name
+                    owner {
+                        login
+                    }
+                    url
+                    stargazerCount
+                    forkCount
+                }
+            }
+        }
+    }
+}
+{
+  "cursor": null,
+  "queryParam": "stars:>3441 forks:>533 created:*..2010-01-01"
+}
+
+query GetReleases($repoName: String!, $owner: String!, $cursor: String) {
+    repository(name: $repoName, owner: $owner) {
+        releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}, after: $cursor) {
+            pageInfo {
+                hasNextPage,
+                endCursor
+            }
+            nodes {
+                id,
+                tagName,
+                description,
+                url,
+                isPrerelease,
+                createdAt,
+                updatedAt
+            }
+        }
+    }
+}
+{
+  "repoName": "react-native",
+  "owner": "facebook",
+  "cursor": null
+}
+
+query GetMergedPullrequests($queryParam: String!, $cursor: String) {
+    search(query: $queryParam, type: ISSUE, first: 100, after: $cursor) {
+        pageInfo {
+            hasNextPage,
+            endCursor
+        }
+        issueCount
+        edges {
+            node {
+                ... on PullRequest {
+                    commits(last: 1) {
+                        totalCount
+                        nodes {
+                            commit {
+                                url
+                                id
+                                message
+                                committedDate
+                            }
+                        }
+                    }
+                    author {
+                        login
+                    }
+                    createdAt
+                    closedAt
+                    updatedAt
+                    mergedAt
+                    id
+                    title
+                    url
+                    body
+                }
+            }
+        }
+    }
+}
+{
+    "queryParam": "repo:facebook/react-native is:pr merged:2020-01-01..2020-12-31",
+    "cursor": null
+}
+
+query GetBranchNames($owner: String!, $name: String!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+        id,
+        name
+        refs(refPrefix: "refs/heads/", first: 100, after: $cursor) {
+            pageInfo {
+                hasNextPage,
+                endCursor
+            }
+            nodes {
+                id
+                name
+            }
+        }
+    }
+}
+{
+    "owner": "facebook",
+    "name": "react-native",
+    "cursor": null
+}
+
+
+query GetFileContent($owner: String!, $name: String!, $expression: String!, $qualifiedName: String!, $path: String!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+        content: object(expression: $expression) {
+            ... on Blob {
+                text
+            }
+        }
+        info: ref(qualifiedName: $qualifiedName) {
+            target {
+                ... on Commit {
+                    history(first: 100, after: $cursor, path: $path) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        totalCount
+                        nodes {
+                            author {
+                                user {
+                                    login
+                                }
+                                email
+                            }
+                            message
+                            pushedDate
+                            committedDate
+                            authoredDate
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+{
+    "owner": "ddangelorb",
+    "name": "gthbmining",
+    "expression": "master:rc/README.md",
+    "qualifiedName": "master",
+    "path": "rc/README.md",
+    "cursor": null
+}
+

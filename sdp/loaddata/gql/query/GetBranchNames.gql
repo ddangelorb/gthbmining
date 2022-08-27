@@ -1,0 +1,16 @@
+query GetBranchNames($owner: String!, $name: String!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+        id,
+        name
+        refs(refPrefix: "refs/heads/", first: 100, after: $cursor) {
+            pageInfo {
+                hasNextPage,
+                endCursor
+            }
+            nodes {
+                id
+                name
+            }
+        }
+    }
+}

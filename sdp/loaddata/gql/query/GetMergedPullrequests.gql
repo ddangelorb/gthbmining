@@ -1,0 +1,37 @@
+query GetMergedPullrequests($queryParam: String!, $cursor: String) {
+    search(query: $queryParam, type: ISSUE, first: 100, after: $cursor) {
+        pageInfo {
+            hasNextPage,
+            endCursor
+        }
+        issueCount
+        edges {
+            node {
+                ... on PullRequest {
+                    commits(last: 1) {
+                        totalCount
+                        nodes {
+                            commit {
+                                url
+                                id
+                                message
+                                committedDate
+                            }
+                        }
+                    }
+                    author {
+                        login
+                    }
+                    createdAt
+                    closedAt
+                    updatedAt
+                    mergedAt
+                    id
+                    title
+                    url
+                    body
+                }
+            }
+        }
+    }
+}
